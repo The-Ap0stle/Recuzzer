@@ -17,7 +17,6 @@ def is_url_alive(url):
         return False
 
 def write_unique(output_file, url):
-    # Avoid duplicates by checking if the URL is already in the file
     if not os.path.exists(output_file):
         with open(output_file, "w") as f:
             f.write(f"{url}\n")
@@ -79,7 +78,6 @@ def recursive_fuzzing(file_path, output_dir, wordlist_path, recursive_status, ma
     else:
         print(f"{RED}Wordlist file {wordlist_path} does not exist{RESET}")
     
-    # Check if new file has content, and recurse if necessary
     if os.path.exists(new_file) and os.path.getsize(new_file) > 0:
         print(f"Recursing into {new_file}...")
         recursive_fuzzing(new_file, output_dir, wordlist_path, recursive_status, depth + 1, max_depth, threads)
@@ -91,12 +89,11 @@ def call_rec_func(output_dir, wordlist_path, recursive_status, max_depth, thread
      while recursive_status == 0:
         choice = input("Do you want to recursively fuzz? (y/n): ").strip().lower()
         if choice == 'y':
-            # Prompt user for a status code
+    
             try:
                 recursive_status = int(input("Enter the status code or filename for recursive fuzzing: ").strip())
                 initial_file_path = os.path.join(output_dir, f"{recursive_status}.txt")
                 
-                # Check if file with status code URLs exists
                 if os.path.exists(initial_file_path):
                     print(f"{ORANGE}Starting recursive fuzzing for : {recursive_status}.{RESET}")
                     recursive_fuzzing(initial_file_path, output_dir, wordlist_path, recursive_status, max_depth, threads)
@@ -133,31 +130,26 @@ def main():
     threads = args.threads
     max_depth = args.max_recursion
 
-    # Define the output directory
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
         
     if not input_url: 
         initial_file_path = recursive_status
         if os.path.exists(initial_file_path):
-        #if os.path.exists(initial_file_path) or os.path.exists(os.path.join(os.getcwd(), initial_file_path)):
             print(f"{ORANGE}Starting recursive fuzzing for : {recursive_status}{RESET}\nThis may take some time...")
             recursive_fuzzing(initial_file_path, output_dir, wordlist_path, recursive_status, max_depth, threads)
         call_rec_func(output_dir, wordlist_path, recursive_status, max_depth, threads)
         return
 
-    # Normalize the URL with 'http://' if needed
     if not input_url.startswith(("http://", "https://")):
         input_url = "http://" + input_url
     
-    # Check if the URL is alive
     if not is_url_alive(input_url):
         print(f"{RED}The URL {input_url} is not valid or alive.\nExiting{RESET}")
         return
     
     print(f"{GREEN}The URL {input_url} is valid and alive{RESET}\nFuzzing...")
 
-    # Fuzz directories using the specified directory wordlist
     if os.path.exists(wordlist_path):
         with open(wordlist_path, "r") as wordlist, ThreadPoolExecutor(max_workers=threads) as executor:
             for directory in wordlist:
@@ -167,7 +159,6 @@ def main():
         return
         
     
-    # Start recursive fuzzing if a matching status code file is created
     if recursive_status:
         initial_file_path = os.path.join(output_dir, f"{recursive_status}.txt")
         if os.path.exists(initial_file_path):

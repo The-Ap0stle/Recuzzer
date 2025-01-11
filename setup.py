@@ -8,6 +8,7 @@ setup(
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/The-Ap0stle/Recuzzer",
+    py_modules=["main"],
     license="GPL",
     packages=find_packages(),
     install_requires=[
@@ -21,7 +22,7 @@ setup(
     python_requires=">=3.6",
     entry_points={
         "console_scripts": [
-            "recuzzer=Recuzzer.main:main",  
+            "recuzzer = main:main",  
         ],
     },
 )
