@@ -82,7 +82,7 @@ def recursive_fuzzing(file_path, output_dir, wordlist_path, recursive_status, ma
         print(f"Recursing into {new_file}...")
         recursive_fuzzing(new_file, output_dir, wordlist_path, recursive_status, depth + 1, max_depth, threads)
     else:
-        print(f"{ORANGE}No more URLs for recursion{RESET}")
+        print(f"\n{ORANGE}No more URLs for recursion{RESET}")
         
 def call_rec_func(output_dir, wordlist_path, recursive_status, max_depth, threads):
      recursive_status=0
@@ -91,11 +91,11 @@ def call_rec_func(output_dir, wordlist_path, recursive_status, max_depth, thread
         if choice == 'y':
     
             try:
-                recursive_status = int(input("Enter the status code or filename for recursive fuzzing: ").strip())
+                recursive_status = int(input("\nEnter the status code or filename for recursive fuzzing: ").strip())
                 initial_file_path = os.path.join(output_dir, f"{recursive_status}.txt")
                 
                 if os.path.exists(initial_file_path):
-                    print(f"{ORANGE}Starting recursive fuzzing for : {recursive_status}.{RESET}")
+                    print(f"\n{ORANGE}Starting recursive fuzzing for : {recursive_status}.{RESET}")
                     recursive_fuzzing(initial_file_path, output_dir, wordlist_path, recursive_status, max_depth, threads)
                     recursive_status = 0
                     
@@ -107,7 +107,7 @@ def call_rec_func(output_dir, wordlist_path, recursive_status, max_depth, thread
                 print(f"{RED}Invalid input! Please enter a valid status code.{RESET}")
         
         elif choice == 'n':
-            print("Exiting fuzzing.")
+            print("\nExiting.")
             break
         else:
             print(f"{RED}Invalid choice! Please enter 'y' or 'n'.{RESET}")
@@ -136,7 +136,7 @@ def main():
     if not input_url: 
         initial_file_path = recursive_status
         if os.path.exists(initial_file_path):
-            print(f"{ORANGE}Starting recursive fuzzing for : {recursive_status}{RESET}\nThis may take some time...")
+            print(f"\n{ORANGE}Starting recursive fuzzing for : {recursive_status}{RESET}\nThis may take some time...")
             recursive_fuzzing(initial_file_path, output_dir, wordlist_path, recursive_status, max_depth, threads)
         call_rec_func(output_dir, wordlist_path, recursive_status, max_depth, threads)
         return
@@ -162,7 +162,7 @@ def main():
     if recursive_status:
         initial_file_path = os.path.join(output_dir, f"{recursive_status}.txt")
         if os.path.exists(initial_file_path):
-            print(f"{ORANGE}Starting recursive fuzzing for status code: {recursive_status}{RESET}\nThis may take some time...")
+            print(f"\n{ORANGE}Starting recursive fuzzing for status code: {recursive_status}{RESET}\nThis may take some time...")
             recursive_fuzzing(initial_file_path, output_dir, wordlist_path, recursive_status, max_depth, threads)
         call_rec_func(output_dir, wordlist_path, recursive_status, max_depth, threads)
     else:
