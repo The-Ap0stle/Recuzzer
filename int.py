@@ -65,6 +65,7 @@ def recursive_fuzzing(file_path, output_dir, wordlist_path, recursive_status, ma
     else:
         print(f"\n{ORANGE}No more URLs for recursion{RESET}")
 
+
 def main():
     parser = argparse.ArgumentParser(description="Recuzzer : Recursive Sub-Directory Fuzzing Tool")
     parser.add_argument("-w", "--wordlist", required=True, help="The path to the directory wordlist file.")
@@ -87,7 +88,7 @@ def main():
     if os.path.exists(initial_file_path):
         print(f"\n{ORANGE}Starting recursive fuzzing for : {recursive_status}{RESET}\nThis may take some time...")
         recursive_fuzzing(initial_file_path, output_dir, wordlist_path, recursive_status, max_depth, threads)
-    return
+ 
   
 if __name__ == "__main__":
     main()
