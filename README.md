@@ -1,6 +1,7 @@
 # RECUZZER 
 
-### Recuzzer is a recursive directory fuzzing tool designed for bug hunters and security researchers. 
+Recuzzer is a recursive directory fuzzing tool designed for bug hunters and security researchers. 
+### Documentation : [Read here](https://medium.com/@nevildomain/project-recuzzer-d5a63c195605)
 
 ## Features
   - Supports multi-threaded directory fuzzing.
